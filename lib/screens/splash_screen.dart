@@ -184,7 +184,7 @@ class SplashIcon extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.3),
-            blurRadius: 15,
+            blurRadius: 15.r,
             offset: const Offset(0, 15),
           ),
         ],

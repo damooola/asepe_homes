@@ -92,7 +92,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Push notifications for relay state changes
 - [ ] User authentication and multi-device support
 - [ ] Scheduling system for automatic relay control
-- [ ] Power consumption graph, analytics and insights
 - [ ] Offline mode with data synchronization
 - [ ] Custom themes and UI customization
 - [ ] Export power data functionality
