@@ -268,21 +268,21 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
                   child: _buildStatCard(
                     'Average',
                     '${stats['avg']?.toStringAsFixed(1)} W',
-                    Colors.blue,
+                    Theme.of(context).colorScheme.inversePrimary,
                   ),
                 ),
                 Expanded(
                   child: _buildStatCard(
                     'Peak',
                     '${stats['max']?.toStringAsFixed(1)} W',
-                    Colors.red,
+                    Theme.of(context).colorScheme.inversePrimary,
                   ),
                 ),
                 Expanded(
                   child: _buildStatCard(
                     'Minimum',
                     '${stats['min']?.toStringAsFixed(1)} W',
-                    Colors.green,
+                    Theme.of(context).colorScheme.inversePrimary,
                   ),
                 ),
               ],
@@ -295,7 +295,7 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
 
   Widget _buildStatCard(String title, String value, Color color) {
     return Card(
-      color: color.withValues(alpha: 0.1),
+      elevation: 4,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
         child: Column(
@@ -404,8 +404,8 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 30,
-              interval: 1,
+              reservedSize: 25,
+              interval: 5,
               getTitlesWidget: (value, meta) {
                 final index = value.toInt();
                 if (index >= 0 && index < data.length) {
@@ -416,7 +416,7 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
                         : '${date.day}/${date.month}',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
-                      fontSize: 10.sp,
+                      fontSize: 8.sp,
                     ),
                   );
                 }
@@ -427,13 +427,13 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              interval: 1000,
+              interval: 1500,
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${value.toInt()}W',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary,
-                    fontSize: 10.sp,
+                    fontSize: 8.sp,
                   ),
                 );
               },
@@ -459,7 +459,7 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
                   TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
+                    fontSize: 8.sp,
                   ),
                 );
               }).toList();
@@ -478,6 +478,8 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
         barTouchData: BarTouchData(
           touchTooltipData: BarTouchTooltipData(
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
+              final date = data[rodIndex].createdAt;
+
               String powerLine = '';
               switch (rodIndex) {
                 case 0:
@@ -491,7 +493,7 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
                   break;
               }
               return BarTooltipItem(
-                '$powerLine\n${rod.toY.toStringAsFixed(1)} W',
+                '$powerLine\n${rod.toY.toStringAsFixed(1)} W\n ${date.day}/${date.month}',
                 TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -511,24 +513,25 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
           ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
-              showTitles: true,
+              reservedSize: 22,
+              interval: 20,
+              showTitles: false,
               getTitlesWidget: (value, meta) {
                 final index = value.toInt();
                 if (index >= 0 && index < data.length) {
                   final date = data[index].createdAt;
                   return Text(
                     selectedTimeFrame == 0
-                        ? '${date.hour}:${date.minute.toString().padLeft(2, '0')}'
+                        ? '${date.hour}:${date.minute.toString()}'
                         : '${date.day}/${date.month}',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
-                      fontSize: 10.sp,
+                      fontSize: 4.sp,
                     ),
                   );
                 }
                 return const Text('');
               },
-              reservedSize: 38,
             ),
           ),
           leftTitles: AxisTitles(
@@ -735,7 +738,7 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
           BarChartRodData(
             toY: entry.value.power1,
             color: Colors.red,
-            width: 5.w,
+            width: 4.w,
             borderRadius: BorderRadius.circular(2.r),
           ),
         );
@@ -746,7 +749,7 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
           BarChartRodData(
             toY: entry.value.power2,
             color: Colors.orange,
-            width: 5.w,
+            width: 4.w,
             borderRadius: BorderRadius.circular(2.r),
           ),
         );
@@ -757,7 +760,7 @@ class _PowerAnalyticsScreenState extends State<PowerAnalyticsScreen> {
           BarChartRodData(
             toY: entry.value.power3,
             color: Colors.blue,
-            width: 5.w,
+            width: 4.w,
             borderRadius: BorderRadius.circular(2.r),
           ),
         );
